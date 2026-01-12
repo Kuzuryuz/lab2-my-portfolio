@@ -1,10 +1,16 @@
 import { Link, Outlet } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useState } from "react";
+import CartDrawer from "../components/CartDrawer";
+import { useCartStore } from "../store/useCartStore";
 
 const MainLayout = () => {
   const { darkMode, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const cartCount = useCartStore((s) =>
+    s.cart.reduce((sum, i) => sum + (i.quantity || 0), 0)
+  );
 
   return (
     <div className="min-h-screen transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
@@ -58,16 +64,32 @@ const MainLayout = () => {
               <Link to="/product" className="hover:text-blue-500">
                 Product
               </Link>
+              <Link to="/cart" className="hover:text-blue-500 relative">
+                Cart
+              </Link>
               <button
                 onClick={toggleTheme}
                 className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
               >
                 {darkMode ? "☀️ Light" : "🌙 Dark"}
               </button>
+              <button
+                onClick={() => setCartOpen(true)}
+                className="relative p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
+                aria-label="Open cart"
+              >
+                🛒
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 text-xs bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
         </div>
       </nav>
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
 
       <main className="p-8">
         <Outlet />

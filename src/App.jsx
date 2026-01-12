@@ -6,6 +6,7 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import Catalog from "./pages/Catalog";
 import ProductDetail from "./pages/ProductDetail";
+import CartPage from "./pages/Cart";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="product" element={<Catalog />} />
             <Route path="product/:id" element={<ProductDetail />} />
+            <Route path="cart" element={<CartPage />} />
           </Route>
         </Routes>
       </ThemeProvider>
