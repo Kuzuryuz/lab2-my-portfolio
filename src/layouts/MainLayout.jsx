@@ -67,6 +67,10 @@ const MainLayout = () => {
               <Link to="/cart" className="hover:text-blue-500 relative">
                 Cart
               </Link>
+              <Link to="/apply/step-1" className="hover:text-blue-500">
+                Apply Job
+              </Link>
+
               <button
                 onClick={toggleTheme}
                 className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full"

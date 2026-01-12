@@ -7,6 +7,11 @@ import Contact from "./pages/Contact";
 import Catalog from "./pages/Catalog";
 import ProductDetail from "./pages/ProductDetail";
 import CartPage from "./pages/Cart";
+import FormLayout from "./layouts/FormLayout";
+import Step1 from "./pages/Step1";
+import Step2 from "./pages/Step2";
+import Review from "./pages/Review";
+import ApplySuccess from "./pages/ApplySuccess";
 
 function App() {
   return (
@@ -20,6 +25,13 @@ function App() {
             <Route path="product" element={<Catalog />} />
             <Route path="product/:id" element={<ProductDetail />} />
             <Route path="cart" element={<CartPage />} />
+
+            <Route path="/apply" element={<FormLayout />}>
+              <Route path="step-1" element={<Step1 />} />
+              <Route path="step-2" element={<Step2 />} />
+              <Route path="review" element={<Review />} />
+              <Route path="success" element={<ApplySuccess />} />
+            </Route>
           </Route>
         </Routes>
       </ThemeProvider>
