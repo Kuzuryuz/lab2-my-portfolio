@@ -1,8 +1,9 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useState } from "react";
 import CartDrawer from "../components/CartDrawer";
 import { useCartStore } from "../store/useCartStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 const MainLayout = () => {
   const { darkMode, toggleTheme } = useTheme();
@@ -11,6 +12,8 @@ const MainLayout = () => {
   const cartCount = useCartStore((s) =>
     s.cart.reduce((sum, i) => sum + (i.quantity || 0), 0)
   );
+  const { isAuthenticated, role, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
@@ -71,12 +74,23 @@ const MainLayout = () => {
                 Apply Job
               </Link>
 
+              <Link to="/dashboard" className="hover:text-blue-500">
+                Dashboard
+              </Link>
+
+              {role === "admin" && (
+                <Link to="/admin-settings" className="hover:text-blue-500">
+                  Admin
+                </Link>
+              )}
+
               <button
                 onClick={toggleTheme}
                 className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
               >
                 {darkMode ? "☀️ Light" : "🌙 Dark"}
               </button>
+
               <button
                 onClick={() => setCartOpen(true)}
                 className="relative p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
@@ -89,6 +103,30 @@ const MainLayout = () => {
                   </span>
                 )}
               </button>
+
+              {isAuthenticated ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                    {role}
+                  </span>
+                  <button
+                    onClick={() => {
+                      logout();
+                      navigate("/");
+                    }}
+                    className="py-1 px-3 border rounded-md text-sm"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="py-1 px-3 border rounded-md text-sm hover:bg-gray-100"
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         </div>

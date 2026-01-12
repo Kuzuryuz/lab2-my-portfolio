@@ -12,6 +12,10 @@ import Step1 from "./pages/Step1";
 import Step2 from "./pages/Step2";
 import Review from "./pages/Review";
 import ApplySuccess from "./pages/ApplySuccess";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import AdminSettings from "./pages/AdminSettings";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -25,6 +29,25 @@ function App() {
             <Route path="product" element={<Catalog />} />
             <Route path="product/:id" element={<ProductDetail />} />
             <Route path="cart" element={<CartPage />} />
+            <Route path="login" element={<Login />} />
+
+            <Route
+              path="dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="admin-settings"
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminSettings />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="/apply" element={<FormLayout />}>
               <Route path="step-1" element={<Step1 />} />
