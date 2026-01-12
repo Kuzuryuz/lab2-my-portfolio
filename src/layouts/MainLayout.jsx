@@ -55,6 +55,9 @@ const MainLayout = () => {
               <Link to="/contact" className="hover:text-blue-500">
                 Contact
               </Link>
+              <Link to="/product" className="hover:text-blue-500">
+                Product
+              </Link>
               <button
                 onClick={toggleTheme}
                 className="p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
